@@ -1,0 +1,10 @@
+# Ignorar arquivos CSV
+*.csv
+
+# Ignorar arquivos compilados Python
+*.pyc
+*.pth
+__pycache__/
+
+# Ignorar diretórios e arquivos gerados pelo Keras
+.keras/
