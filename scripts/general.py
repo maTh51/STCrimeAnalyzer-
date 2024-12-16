@@ -11,11 +11,11 @@ import gpustat
 from common.utils import pre_process, train_test_split
 from common.grid import create_grid
 from common.evaluation import EvaluationModel
-from sthsl.class_auto_test import STHSLModel
-from stkde_model import STKDEModel
-from starima.starima import STARIMA
-from regressions.regressions import REGRESSIONS
 
+from models.sthsl.class_auto_test import STHSLModel
+from models.stkde_model import STKDEModel
+from models.starima.starima import STARIMA
+from models.regressions.regressions import REGRESSIONS
 
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
 os.environ["EXPORT_CUDA"] = "<1>"
