@@ -8,6 +8,7 @@ import time
 import psutil
 import gpustat
 
+from commom.database import DatabaseConnection
 from common.utils import pre_process, train_test_split
 from common.grid import create_grid
 from common.evaluation import EvaluationModel
@@ -17,8 +18,9 @@ from models.stkde_model import STKDEModel
 from models.starima.starima import STARIMA
 from models.regressions.regressions import REGRESSIONS
 
-os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
-os.environ["EXPORT_CUDA"] = "<1>"
+# Optinional configs
+# os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
+# os.environ["EXPORT_CUDA"] = "<1>"
 
 # %%
 if __name__ == '__main__':
@@ -72,21 +74,21 @@ if __name__ == '__main__':
 
         for grid_size in grid_size_lst:
 
+            # Load config file
+            with open(path_config) as f:
+                config = yaml.load(f, Loader=yaml.FullLoader)
+            
             # Variables that need to iterate over loop
             config['evaluation']['grid_size'] = grid_size
             config['evaluation']['temporal_granularity'] = temporal_granularity
             train_dt, train_days = test_lst[0]
             config['database']['filters']['start_date'] = train_dt
 
-            # Load config file
-            with open(path_config) as f:
-                config = yaml.load(f, Loader=yaml.FullLoader)
-
             #Load database
             print('Load Database...')
             df = DatabaseConnection().get_data_all(
                 column=config['database']['columns'], 
-                filter=config['database']['filters'])
+                filter=config['database']['filters'], online=False)
 
             #Pre-process
             print('Pre process Database...')
@@ -118,7 +120,7 @@ if __name__ == '__main__':
             print('Train Models...')
             models = []
             for m, params in config['models'].items():
-                print(f'Train {m}...')
+                print(f'Train {m}...')  
                 if params and 'slide_window' in params.keys():
                     del params['slide_window']
                     model = globals()[m](
