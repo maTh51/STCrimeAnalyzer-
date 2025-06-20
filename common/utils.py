@@ -2,6 +2,8 @@ import pandas as pd
 import geopandas as gpd
 import numpy as np
 
+from grid import points_in_municipalities
+
 def pre_process(
     data: pd.DataFrame, neighborhood: list, columns: list
 ) -> gpd.GeoDataFrame:

@@ -9,15 +9,15 @@ import time
 import psutil
 import gpustat
 
-from experimental.database import DatabaseConnection
-from experimental.util import pre_process, train_test_split
-from experimental.grid import create_grid
-from experimental.evaluation import EvaluationModel
+from common.database import DatabaseConnection
+from common.utils import pre_process, train_test_split
+from common.grid import create_grid
+from common.evaluation import EvaluationModel
 
-from experimental.st3dnet.class_st3dnet import ST3DNETModel
-from experimental.sthsl.class_auto_test import STHSLModel
-from experimental.stkde_model import STKDEModel
-from experimental.starima.starima import STARIMA
+from models.regressions.regressions import REGRESSIONS
+from models.sthsl.class_auto_test import STHSLModel
+from models.stkde.stkde_model import STKDEModel
+from models.starima.starima import STARIMA
 
 warnings.filterwarnings("ignore")
 
